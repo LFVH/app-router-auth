@@ -5,7 +5,7 @@ const links = [
   { href: 'https://app-router-auth-sable.vercel.app', title: 'Home' },
   { href: '#', title: 'About' },
   { href: '#', title: 'Services' },
-  { href: '\contact', title: 'Contact' },
+  { href: '/contact', title: 'Contact' },
 ];
 
 export default function Layout({
