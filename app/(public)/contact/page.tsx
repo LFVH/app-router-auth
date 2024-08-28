@@ -20,7 +20,7 @@ export default function Page() {
         >
 		Mange msg pro nosso zapzap
         </Link>
-	<a href="https://wa.me/5541999070610"><img src="whatsapp.svg" alt="Whatsapp" style="width:131px;height:31px;"></a>
+	
       </div>
     </div>
   );
