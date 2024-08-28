@@ -25,6 +25,9 @@ export default function Page() {
         >
 		Mange msg pro nosso zapzap
         </Link>
+	<a href="https://wa.me/5541999070610" target="_blank">     
+		<img src="/next.svg" />
+   	</a>
 	
       </div>
     </div>
