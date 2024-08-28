@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Page() {
   return (
@@ -24,10 +25,8 @@ export default function Page() {
           href="https://wa.me/5541999070610"
         >
 		Mange msg pro nosso zapzap
+		<Image src={"/next.svg"} alt="My WPP" width={150} height={150} />
         </Link>
-	<a href="https://wa.me/5541999070610" target="_blank">     
-		<img src="/next.svg" />
-   	</a>
 	
       </div>
     </div>
