@@ -9,9 +9,14 @@ export default function Page() {
         </h1>
         <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
           telefone:
-		  email:
-		  emdereço
         </p>
+	      <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          endereço:
+        </p>
+	      <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          email:
+        </p>
+	      
       </div>
       <div className="flex flex-col justify-center gap-2 min-[400px]:flex-row">
         <Link
