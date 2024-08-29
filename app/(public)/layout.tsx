@@ -2,10 +2,10 @@ import Link from 'next/link';
 import { MenuIcon } from '@/components/ui/icons';
 
 const links = [
-  { href: '#', title: 'Home' },
+  { href: 'https://app-router-auth-sable.vercel.app', title: 'Home' },
   { href: '#', title: 'About' },
   { href: '#', title: 'Services' },
-  { href: '#', title: 'Contact' },
+  { href: '/contact', title: 'Contact' },
 ];
 
 export default function Layout({
