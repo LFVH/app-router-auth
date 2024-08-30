@@ -57,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Salva no banco de dados
     await db.insert(images).values({
       filename: file.newFilename,
-      filepath: '/uploads/${file.newFilename}`,
+      filepath: '/uploads/${file.newFilename}',
     }).execute();
 	
     // Faça algo com o arquivo
