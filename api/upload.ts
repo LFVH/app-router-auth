@@ -20,7 +20,7 @@ export const config = {
   },
 };
 
-const parseForm = (req: NextApiRequest): Promise<{ fields: Fields; files: Files }> => {
+const parseForm = (req: NextApiRequest): Promise<{ fields: formidable.Fields; files: formidable.Files }> => {
   const form = formidable({ uploadDir, keepExtensions: true });
 
   return new Promise((resolve, reject) => {
@@ -34,15 +34,21 @@ const parseForm = (req: NextApiRequest): Promise<{ fields: Fields; files: Files 
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
-  }
-
   try {
     const { files } = await parseForm(req);
-    const file = files.file as formidable.File;
 
-    const oldPath = file.filepath;
+    // Primeiro, verifique se 'files.file' existe e não é undefined
+    if (!files.file) {
+      return res.status(400).json({ error: 'Nenhum arquivo foi enviado.' });
+    }
+
+    // Verifique se 'files.file' é um array
+    const file = Array.isArray(files.file) ? files.file[0] : files.file;
+
+    // Agora podemos garantir que 'file' é do tipo 'formidable.File'
+    const formidableFile = file as formidable.File;
+	
+	const oldPath = file.filepath;
     const newPath = path.join(uploadDir, file.newFilename);
 
     // Renomeia e move o arquivo para o diretório de uploads
@@ -51,11 +57,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Salva no banco de dados
     await db.insert(images).values({
       filename: file.newFilename,
-      filepath: `/uploads/${file.newFilename}`,
+      filepath: '/uploads/${file.newFilename}`,
     }).execute();
-
-    res.status(200).json({ message: 'Upload successful', filename: file.newFilename });
+	
+    // Faça algo com o arquivo
+    res.status(200).json({ success: true, file: formidableFile });
   } catch (error) {
-    res.status(500).json({ message: 'Upload failed', error });
+    res.status(500).json({ error: 'Erro ao processar o upload do arquivo.' });
   }
 }
