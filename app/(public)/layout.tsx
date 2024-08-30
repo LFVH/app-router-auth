@@ -3,8 +3,8 @@ import { MenuIcon } from '@/components/ui/icons';
 
 const links = [
   { href: 'https://app-router-auth-sable.vercel.app', title: 'Home' },
-  { href: '#', title: 'About' },
-  { href: '#', title: 'Services' },
+  { href: '/insertImages', title: 'Insert Images' },
+  { href: '/listImages', title: 'List Images' },
   { href: '/contact', title: 'Contact' },
 ];
 
