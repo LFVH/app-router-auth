@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import formidable from 'formidable';
+import { IncomingForm, Fields, Files } from 'formidable';
 import { db } from '@/drizzle/db';
 import { images } from '@/drizzle/schema';
 import { promisify } from 'util';
@@ -19,12 +20,14 @@ export const config = {
   },
 };
 
-const parseForm = (req: NextApiRequest): Promise<formidable.Fields & formidable.Files> => {
+cconst parseForm = (req: NextApiRequest): Promise<{ fields: Fields; files: Files }> => {
   const form = formidable({ uploadDir, keepExtensions: true });
 
   return new Promise((resolve, reject) => {
     form.parse(req, (err, fields, files) => {
-      if (err) reject(err);
+      if (err) {
+        reject(err);
+      }
       resolve({ fields, files });
     });
   });
