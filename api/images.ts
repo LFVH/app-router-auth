@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { db } from '../../drizzle/db';
-import { images } from '../../drizzle/schema';
+import { db } from '@/drizzle/db';
+import { images } from '@/drizzle/schema';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
