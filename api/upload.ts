@@ -20,7 +20,7 @@ export const config = {
   },
 };
 
-cconst parseForm = (req: NextApiRequest): Promise<{ fields: Fields; files: Files }> => {
+const parseForm = (req: NextApiRequest): Promise<{ fields: Fields; files: Files }> => {
   const form = formidable({ uploadDir, keepExtensions: true });
 
   return new Promise((resolve, reject) => {
