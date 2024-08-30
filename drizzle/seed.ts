@@ -9,7 +9,6 @@ async function main() {
   };
   const res = await insertUser(newUser);
   console.log('Sucessfully seeded users table:', res);
-  process.exit();
 }
 
 main();
