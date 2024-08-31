@@ -1,6 +1,5 @@
-
 import type { NextApiRequest, NextApiResponse } from 'next';
-import * as formidable from 'formidable';
+import multer from 'multer';
 import { db } from '@/drizzle/db';
 import { images } from '@/drizzle/schema';
 import { promisify } from 'util';
@@ -20,49 +19,40 @@ export const config = {
   },
 };
 
-const parseForm = (req: NextApiRequest): Promise<{ fields: formidable.Fields; files: formidable.Files }> => {
-  const form = formidable.IncomingForm({ uploadDir: uploadDir, keepExtensions: true});
-  fs.ensureDirSync(uploadDir);
-  
+// Configuração do Multer para armazenar arquivos no diretório especificado
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
 
-  return new Promise((resolve, reject) => {
-    form.parse(req, (err, fields, files) => {
-      if (err) {
-        reject(err);
-      }
-      resolve({ fields, files });
-    });
-  });
-};
+const upload = multer({ storage: storage });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const { files } = await parseForm(req);
-
-    // Primeiro, verifique se 'files.file' existe e não é undefined
-    if (!files.file) {
-      return res.status(400).json({ error: 'Nenhum arquivo foi enviado.' });
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  upload.single('file')(req, res, async (err: any) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
     }
 
-    // Verifique se 'files.file' é um array
-    const file = Array.isArray(files.file) ? files.file[0] : files.file;
+    try {
+      // Aqui você pode acessar o arquivo carregado via req.file e os campos via req.body
+      const file = req.file;
+      const fields = req.body;
 
-	
-	const oldPath = file.filepath;
-    const newPath = path.join(uploadDir, file.newFilename);
+      if (file) {
+        // Salva no banco de dados
+        await db.insert(images).values({
+          filename: file.filename,  // `filename` é a propriedade usada pelo Multer para o nome do arquivo final
+          filepath: '/uploads/${file.filename}',
+        }).execute();
+      }
 
-    // Renomeia e move o arquivo para o diretório de uploads
-    await promisify(fs.rename)(oldPath, newPath);
-
-    // Salva no banco de dados
-    await db.insert(images).values({
-      filename: file.newFilename,
-      filepath: '/uploads/${file.newFilename}',
-    }).execute();
-	
-    // Faça algo com o arquivo
-    res.status(200).json({ success: true, file: file });
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao processar o upload do arquivo.' });
-  }
-}
+      res.status(200).json({ message: 'Upload realizado com sucesso' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+};
