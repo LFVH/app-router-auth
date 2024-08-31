@@ -1,58 +1,44 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import multer from 'multer';
-import { db } from '@/drizzle/db';
-import { images } from '@/drizzle/schema';
-import { promisify } from 'util';
-import { pipeline } from 'stream';
-import fs from 'fs-extra';
-import path from 'path';
+import { createWriteStream } from '@vercel/blob';
+import { Readable } from 'stream';
 
-const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-
-// Assegura que o diretório de upload existe
-fs.mkdirSync(uploadDir, { recursive: true });
-
-// Desabilita o parsing de body por padrão para essa rota
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: false,  // Desativa o bodyParser padrão para manipulação de uploads de arquivos
   },
 };
 
-// Configuração do Multer para armazenar arquivos no diretório especificado
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  }
-});
-
-const upload = multer({ storage: storage });
-
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  upload.single('file')(req, res, async (err: any) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-
+  if (req.method === 'POST') {
     try {
-      // Aqui você pode acessar o arquivo carregado via req.file e os campos via req.body
-      const file = req.file;
-      const fields = req.body;
+      const readable = new Readable();
+      readable._read = () => {};  // Necessário para o stream funcionar corretamente
 
-      if (file) {
-        // Salva no banco de dados
-        await db.insert(images).values({
-          filename: file.filename,  // `filename` é a propriedade usada pelo Multer para o nome do arquivo final
-          filepath: '/uploads/${file.filename}',
-        }).execute();
+      req.pipe(readable);
+
+      const { blob, error } = await createWriteStream({
+        readable,  // Stream dos dados do arquivo
+        filePath: 'uploads/${Date.now()}-${Math.round(Math.random() * 1e9)}.jpg',  // Defina o caminho e o nome do arquivo como quiser
+        contentType: req.headers['content-type'] || 'application/octet-stream',  // Define o tipo de conteúdo do arquivo
+      });
+
+      if (error) {
+        throw new Error(error);
       }
 
-      res.status(200).json({ message: 'Upload realizado com sucesso' });
+      // Salve a URL do arquivo no banco de dados, se necessário
+      // Exemplo: await db.insert(...).values({ filepath: blob.url }).execute();
+        // Salva no banco de dados
+        await db.insert(images).values({
+          filepath: blob.url
+        }).execute();
+      
+      res.status(200).json({ message: 'Upload realizado com sucesso', url: blob.url });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  });
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).end('Method Not Allowed');
+  }
 };
