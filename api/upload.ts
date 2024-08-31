@@ -4,7 +4,7 @@ import { db } from '@/drizzle/db';
 import { images } from '@/drizzle/schema';
 import { promisify } from 'util';
 import { pipeline } from 'stream';
-import fs from 'fs';
+import fs from 'fs-extra';
 import path from 'path';
 
 const uploadDir = path.join(process.cwd(), 'public', 'uploads');
