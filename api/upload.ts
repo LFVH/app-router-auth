@@ -1,39 +1,39 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createWriteStream } from '@vercel/blob';
-import { Readable } from 'stream';
+import { put } from '@vercel/blob';
 
 export const config = {
   api: {
-    bodyParser: false,  // Desativa o bodyParser padrão para manipulação de uploads de arquivos
+    bodyParser: false,  // Desativa o bodyParser para uploads
   },
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     try {
-      const readable = new Readable();
-      readable._read = () => {};  // Necessário para o stream funcionar corretamente
+      const buffers: any[] = [];
 
-      req.pipe(readable);
-
-      const { blob, error } = await createWriteStream({
-        readable,  // Stream dos dados do arquivo
-        filePath: 'uploads/${Date.now()}-${Math.round(Math.random() * 1e9)}.jpg',  // Defina o caminho e o nome do arquivo como quiser
-        contentType: req.headers['content-type'] || 'application/octet-stream',  // Define o tipo de conteúdo do arquivo
+      req.on('data', (chunk) => {
+        buffers.push(chunk);
       });
 
-      if (error) {
-        throw new Error(error);
-      }
+      req.on('end', async () => {
+        const buffer = Buffer.concat(buffers);
 
-      // Salve a URL do arquivo no banco de dados, se necessário
-      // Exemplo: await db.insert(...).values({ filepath: blob.url }).execute();
-        // Salva no banco de dados
+        // Fazendo upload do arquivo usando a API do Vercel Blob
+        const { url } = await put('uploads/my-uploaded-file', buffer, {
+          access: 'public', // Define o nível de acesso (pode ser 'public' ou 'private')
+          contentType: req.headers['content-type'] || 'application/octet-stream',
+        });
+
+        // Exemplo de salvamento da URL no banco de dados
+                // Salva no banco de dados
         await db.insert(images).values({
-          filepath: blob.url
+          filepath: url
         }).execute();
-      
-      res.status(200).json({ message: 'Upload realizado com sucesso', url: blob.url });
+		
+        res.status(200).json({ message: 'Upload realizado com sucesso', url });
+      });
+
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
