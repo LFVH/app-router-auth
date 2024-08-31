@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import * as formidable from 'formidable';
-import { db } from '@/drizzle/db';
-import { images } from '@/drizzle/schema';
+import { db } from './drizzle/db';
+import { images } from './drizzle/schema';
 import { promisify } from 'util';
 import { pipeline } from 'stream';
 import fs from 'fs-extra';
