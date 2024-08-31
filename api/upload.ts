@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const file = Array.isArray(files.file) ? files.file[0] : files.file;
 
     // Agora podemos garantir que 'file' é do tipo 'formidable.File'
-    const formidableFile = file as formidable.File;
+    const formidableFile = file as File;
 	
 	const oldPath = file.filepath;
     const newPath = path.join(uploadDir, file.newFilename);
