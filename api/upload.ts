@@ -46,8 +46,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Verifique se 'files.file' é um array
     const file = Array.isArray(files.file) ? files.file[0] : files.file;
 
-    // Agora podemos garantir que 'file' é do tipo 'formidable.File'
-    const formidableFile = file as File;
 	
 	const oldPath = file.filepath;
     const newPath = path.join(uploadDir, file.newFilename);
@@ -62,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }).execute();
 	
     // Faça algo com o arquivo
-    res.status(200).json({ success: true, file: formidableFile });
+    res.status(200).json({ success: true, file: file });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao processar o upload do arquivo.' });
   }
