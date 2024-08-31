@@ -20,9 +20,7 @@ export const config = {
 };
 
 const parseForm = (req: NextApiRequest): Promise<{ fields: Fields; files: Files }> => {
-  var form = new IncomingForm({ uploadDir: uploadDir});
-  form.keepExtensions = true;
-  
+  var form = new IncomingForm({ uploadDir: uploadDir, keepExtensions: true});
   fs.ensureDirSync(uploadDir);
   
 
