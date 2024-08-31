@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { formidable } from 'formidable';
 import { db } from '@/drizzle/db';
 import { images } from '@/drizzle/schema';
 import { promisify } from 'util';
 import { pipeline } from 'stream';
-import  fs  from 'fs';
-import  path  from 'path';
+import fs from 'fs';
+import path from 'path';
+
+const formidable = require("formidable")
 
 const uploadDir = path.join(process.cwd(), 'public', 'uploads');
 
