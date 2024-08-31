@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { IncomingForm, Fields, Files } from 'formidable';
 import { db } from '@/drizzle/db';
 import { images } from '@/drizzle/schema';
 import { promisify } from 'util';
 import { pipeline } from 'stream';
 import fs from 'fs-extra';
 import path from 'path';
+
+var formidable = require('formidable');
 
 const uploadDir = path.join(process.cwd(), 'public', 'uploads');
 
@@ -19,8 +20,8 @@ export const config = {
   },
 };
 
-const parseForm = (req: NextApiRequest): Promise<{ fields: Fields; files: Files }> => {
-  var form = new IncomingForm({ uploadDir: uploadDir, keepExtensions: true});
+const parseForm = (req: NextApiRequest): Promise<{ fields: formidable.Fields; files: formidable.Files }> => {
+  var form = new formidable.IncomingForm({ uploadDir: uploadDir, keepExtensions: true});
   fs.ensureDirSync(uploadDir);
   
 
