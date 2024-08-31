@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { put } from '@vercel/blob';
+import { db } from '@/drizzle/db';
 
 export const config = {
   api: {
