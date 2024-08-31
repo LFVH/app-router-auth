@@ -21,7 +21,7 @@ export const config = {
 };
 
 const parseForm = (req: NextApiRequest): Promise<{ fields: formidable.Fields; files: formidable.Files }> => {
-  const form = formidable({ uploadDir: uploadDir, keepExtensions: true});
+  const form = formidable.IncomingForm({ uploadDir: uploadDir, keepExtensions: true});
   fs.ensureDirSync(uploadDir);
   
 
