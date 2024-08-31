@@ -1,4 +1,3 @@
-'use server';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import * as formidable from 'formidable';
 import { db } from '@/drizzle/db';
