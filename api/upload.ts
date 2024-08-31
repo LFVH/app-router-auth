@@ -30,6 +30,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         // Exemplo de salvamento da URL no banco de dados
                 // Salva no banco de dados
         await db.insert(images).values({
+		filename: "teste",
           filepath: url
         }).execute();
 		
