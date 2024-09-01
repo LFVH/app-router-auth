@@ -1,40 +1,40 @@
-'use client';
-import { useState, ChangeEvent } from 'react';
-
-export default function Home() {
-  const [file, setFile] = useState<File | null>(null);
-  const [message, setMessage] = useState<string>('');
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setFile(event.target.files[0]);
-    }
-  };
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const response = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await response.json();
-    setMessage(data.message);
-  };
-
+import { type PutBlobResult } from '@vercel/blob';
+import { upload } from '@vercel/blob/client';
+import { useState, useRef } from 'react';
+ 
+export default function AvatarUploadPage() {
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const [blob, setBlob] = useState<PutBlobResult | null>(null);
   return (
-    <div>
-      <h1>Upload de Imagem</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleFileChange} />
+    <>
+      <h1>Upload Your Avatar</h1>
+ 
+      <form
+        onSubmit={async (event) => {
+          event.preventDefault();
+ 
+          if (!inputFileRef.current?.files) {
+            throw new Error('No file selected');
+          }
+ 
+          const file = inputFileRef.current.files[0];
+ 
+          const newBlob = await upload(file.name, file, {
+            access: 'public',
+            handleUploadUrl: '/api/avatar/upload',
+          });
+ 
+          setBlob(newBlob);
+        }}
+      >
+        <input name="file" ref={inputFileRef} type="file" required />
         <button type="submit">Upload</button>
       </form>
-      {message && <p>{message}</p>}
-    </div>
+      {blob && (
+        <div>
+          Blob url: <a href={blob.url}>{blob.url}</a>
+        </div>
+      )}
+    </>
   );
 }
