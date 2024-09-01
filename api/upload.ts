@@ -1,6 +1,5 @@
-
+import { put } from '@vercel/blob';
 import type { NextApiResponse, NextApiRequest, PageConfig } from 'next';
-const { put } = require('@vercel/blob');
  
 export default async function handler(
   request: NextApiRequest,
