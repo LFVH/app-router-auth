@@ -1,19 +1,13 @@
 import { put } from '@vercel/blob';
-import type { NextApiResponse, NextApiRequest, PageConfig } from 'next';
+import { NextResponse } from 'next/server';
  
-export default async function handler(
-  request: NextApiRequest,
-  response: NextApiResponse,
-) {
-  const blob = await put(request.query.filename as string, request, {
+export async function POST(request: Request): Promise<NextResponse> {
+  const { searchParams } = new URL(request.url);
+  const filename = searchParams.get('filename');
+ 
+  const blob = await put(filename, request.body, {
     access: 'public',
   });
  
-  return response.status(200).json(blob);
+  return NextResponse.json(blob);
 }
- 
-export const config: PageConfig = {
-  api: {
-    bodyParser: false,
-  },
-};
