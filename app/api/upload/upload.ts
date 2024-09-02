@@ -1,6 +1,6 @@
 import { put } from '@vercel/blob';
 import { NextResponse } from 'next/server';
-import { PassThrough } from stream;
+import { PassThrough } from 'stream';
  
 export async function POST(request: Request): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
