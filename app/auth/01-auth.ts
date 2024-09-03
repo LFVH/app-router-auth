@@ -18,7 +18,7 @@ export async function signup(
     return {
       message: 'Account creation disabled. Try again later.',
     };
-  // 1. Validate form fields
+  /*// 1. Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
@@ -69,7 +69,7 @@ export async function signup(
 
   // 4. Create a session for the user
   const userId = user.id.toString();
-  await createSession(userId);
+  await createSession(userId);*/
 }
 
 export async function login(
