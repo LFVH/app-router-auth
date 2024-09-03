@@ -15,6 +15,9 @@ export async function signup(
   state: FormState,
   formData: FormData,
 ): Promise<FormState> {
+    return {
+      message: 'Account creation disabled. Try again later.',
+    };
   // 1. Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get('name'),
