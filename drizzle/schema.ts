@@ -32,5 +32,13 @@ export const sessions = pgTable('sessions', {
   expiresAt: timestamp('expires_at').notNull(),
 });
 
+export const images = pgTable('images', {
+  id: serial('id').primaryKey(),
+  filename: text('filename').notNull(),
+  filepath: text('filepath').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+export type NewImage = InferInsertModel<typeof images>;
 export type NewUser = InferInsertModel<typeof users>;
 export type NewSession = InferInsertModel<typeof sessions>;
