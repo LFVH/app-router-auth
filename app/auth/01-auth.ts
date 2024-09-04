@@ -6,7 +6,6 @@ import {
   FormState,
   LoginFormSchema,
   SignupFormSchema,
-  ClosedFormSchema,
 } from '@/app/auth/definitions';
 import { createSession, deleteSession } from '@/app/auth/02-stateless-session';
 import bcrypt from 'bcrypt';
