@@ -6,6 +6,7 @@ import {
   FormState,
   LoginFormSchema,
   SignupFormSchema,
+  ClosedFormSchema,
 } from '@/app/auth/definitions';
 import { createSession, deleteSession } from '@/app/auth/02-stateless-session';
 import bcrypt from 'bcrypt';
@@ -16,7 +17,7 @@ export async function signup(
   formData: FormData,
 ): Promise<FormState> {
     return {
-      error: 'Account creation disabled. Try again later.',
+      errors: { general: 'Account creation disabled. Try again later.' },
     };
   /*// 1. Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
