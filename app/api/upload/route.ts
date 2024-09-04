@@ -21,7 +21,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         return {
           allowedContentTypes: ['image/jpeg', 'image/png', 'image/gif'],
           tokenPayload: JSON.stringify({
-            "userId": 1
+            userId: 1
           }),
         };
       },
@@ -34,7 +34,7 @@ export async function POST(request: Request): Promise<NextResponse> {
  
         try {
           // Run any logic after the file upload completed
-          const { userId } = JSON.parse(tokenPayload);
+          const { userId } = JSON.parse(tokenPayload) !== null ? JSON.parse(tokenPayload) : "";
 
           await db.insert(images).values({
             filename: userId,
