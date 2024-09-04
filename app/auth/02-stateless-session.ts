@@ -9,7 +9,6 @@ const secretKey = process.env.SECRET;
 const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: SessionPayload) {
-  console.log('Encrypt Chave secreta:', key);
   return new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -19,7 +18,6 @@ export async function encrypt(payload: SessionPayload) {
 
 export async function decrypt(session: string | undefined = '') {
   try {
-    console.log('decrypt Chave secreta:', key);
     const { payload } = await jwtVerify(session, key, {
       algorithms: ['HS256'],
     });
@@ -46,7 +44,7 @@ export async function createSession(userId: string) {
     path: '/',
   });
 
-  redirect('/dashboard');
+  redirect('/insertImages');
 }
 
 export async function verifySession() {
