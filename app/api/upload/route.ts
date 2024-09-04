@@ -34,7 +34,8 @@ export async function POST(request: Request): Promise<NextResponse> {
  
         try {
           // Run any logic after the file upload completed
-          const userId = JSON.parse(tokenPayload)?.userId ?? "";
+          const parsedPayload = tokenPayload ? JSON.parse(tokenPayload) : null;
+          const userId = parsedPayload?.userId ?? "";
 
           await db.insert(images).values({
             filename: userId,
