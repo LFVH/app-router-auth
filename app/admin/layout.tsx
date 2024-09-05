@@ -11,7 +11,7 @@ const links = [
   
 ];
 
-export default function Layout({
+export default function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
