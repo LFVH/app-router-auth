@@ -5,8 +5,11 @@ import { images } from '@/drizzle/schema';
 export async function GET(request: Request): Promise<NextResponse> {
   try {
     const result = await db.select().from(images).execute();
-    return NextResponse.status(200).json(result);
+    return NextResponse.json(result);
   } catch (error) {
-    return NextResponse.status(500).json({ message: 'Failed to fetch images', error });
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }, 
+    );
   }
 }
