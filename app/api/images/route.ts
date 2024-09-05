@@ -5,6 +5,8 @@ import { images } from '@/drizzle/schema';
 export async function GET(request: Request): Promise<NextResponse> {
   try {
     const result = await db.select().from(images).execute();
+    console.log("get do api images");
+    console.log(result);
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
