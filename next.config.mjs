@@ -14,7 +14,8 @@ const nextConfig = {
 };
 export default nextConfig;
 
-export async headers() {
+module.exports = {
+  async headers() {
     return [
       {
         // This works, and returns appropriate Response headers:
