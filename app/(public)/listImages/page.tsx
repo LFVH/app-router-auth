@@ -26,16 +26,14 @@ export default function ImageListPage() {
     <div>
       <h2>Imagens Carregadas</h2>
 <section>
+        <ul>
         {images.map((image) => (
-          <Image
-          priority
-          key={image.filename}
-          src={image.filepath}
-          alt={image.filename}
-          width={200}
-          height={200}
-        />
+          <li key={image.id}>
+            <img src={image.filepath} alt={image.filename} width={200} />
+            <p>{image.filename}</p>
+          </li>
         ))}
+      </ul>
         </section>
     </div>
   );
