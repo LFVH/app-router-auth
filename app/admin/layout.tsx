@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { MenuIcon } from '@/components/ui/icons';
 import LogoutButton from './logout-button';
-import { getUser } from '@/app/auth/03-dal';
 
 const links = [
   { href: 'https://signupandloginlfvh.vercel.app', title: 'Home' },
@@ -12,12 +11,11 @@ const links = [
   
 ];
 
-export default async function Layout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-	const user = await getUser();
   return (
     <div>
       <div className="border-b border-gray-100">
