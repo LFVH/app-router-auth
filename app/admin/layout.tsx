@@ -13,9 +13,9 @@ const links = [
 
 export default function AdminLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <div>
       <div className="border-b border-gray-100">
