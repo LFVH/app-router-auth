@@ -10,13 +10,12 @@ export default async function Images() {
  
   return (
  <section>
-        <ul>
         {images.map((image) => (
           <li key={image.pathname}>
             <img src={image.url} alt={image.pathname} width={200} />
           </li>
         ))}
-      </ul>
+
         </section>
 
   );
