@@ -28,19 +28,11 @@ export default function AdminLayout({
             ))}
           </nav>
           <div className="hidden items-center space-x-4 md:flex">
-		  <div className="border-t p-4">
-            <LogoutButton />
-          </div>
-              Login
-            </Link>
+            <div className="border-t p-4">
+              <LogoutButton />
+            </div>
           </div>
           <div className="flex items-center space-x-4 md:hidden">
-            <Link
-              className="inline-flex h-8 items-center rounded-md border border-gray-200 bg-white px-3 text-sm font-medium"
-              href="/login"
-            >
-              Login
-            </Link>
             <button className="inline-flex rounded-md md:hidden" type="button">
               <MenuIcon className="h-6 w-6" />
               <span className="sr-only">Toggle Menu</span>
