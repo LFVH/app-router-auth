@@ -2,15 +2,15 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-type Image = {
+type Imge = {
   id: number;
   filename: string;
   filepath: string;
   createdAt: string;
 };
 
-export default function ImageList() {
-  const [images, setImages] = useState<Image[]>([]);
+export default function ImageListPage() {
+  const [images, setImages] = useState<Imge[]>([]);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -25,7 +25,7 @@ export default function ImageList() {
   return (
     <div>
       <h2>Imagens Carregadas</h2>
-      <ul>
+<section>
         {images.map((image) => (
           <Image
           priority
@@ -36,7 +36,7 @@ export default function ImageList() {
           height={200}
         />
         ))}
-      </ul>
+        </section>
     </div>
   );
 }

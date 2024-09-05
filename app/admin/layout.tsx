@@ -6,7 +6,7 @@ const links = [
   { href: 'https://signupandloginlfvh.vercel.app', title: 'Home' },
   { href: '/admin/insertimages', title: 'Insert Images' },
   { href: '/admin/dashboard', title: 'Dashboard' },
-  { href: '/listImages', title: 'List Images' },
+  { href: '/listimages', title: 'List Images' },
   { href: '/contact', title: 'Contact' },
   
 ];

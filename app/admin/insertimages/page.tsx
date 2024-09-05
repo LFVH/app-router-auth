@@ -4,7 +4,7 @@ import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import { useState, useRef } from 'react';
  
-export default function AvatarUploadPage() {
+export default function ImgUploadPage() {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [blob, setBlob] = useState<PutBlobResult | null>(null);
   return (
