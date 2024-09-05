@@ -1,5 +1,4 @@
 import { list } from '@vercel/blob';
-import Image from 'next/image';
  
 export default async function Images() {
   async function allImages() {

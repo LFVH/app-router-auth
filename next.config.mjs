@@ -8,10 +8,9 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value:
-              'public, max-age=5, s-maxage=5, stale-while-revalidate=5',
+              value: 'no-store, max-age=0',,
           },
-        ],
-      },
+        
       {
         // This doesn't work for 'Cache-Control' key (works for others though):
         source: '/_next/image(.*)',
@@ -19,9 +18,27 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             // Instead of this value:
-            value: 'public, max-age=5, s-maxage=5, stale-while-revalidate=5',
+             value: 'no-store, max-age=0',
             // Cache-Control response header is `public, max-age=60` in production
             // and `public, max-age=0, must-revalidate` in development
+          },
+        ],
+      },
+      {
+        source: '/api/images',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0',
+          },
+        ],
+      },
+      {
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0',
           },
         ],
       },
