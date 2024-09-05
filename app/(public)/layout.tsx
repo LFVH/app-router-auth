@@ -3,8 +3,7 @@ import { MenuIcon } from '@/components/ui/icons';
 
 const links = [
   { href: 'https://signupandloginlfvh.vercel.app', title: 'Home' },
-  { href: '/admin/insertimages', title: 'Insert Images' },
-  { href: '/listimages', title: 'List Images' },
+  { href: '/listImages', title: 'List Images' },
   { href: '/contact', title: 'Contact' },
 ];
 
