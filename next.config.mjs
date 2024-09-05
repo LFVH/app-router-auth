@@ -8,6 +8,7 @@ const nextConfig = {
         port: '',
       },
     ],
+    minimumCacheTTL: 5
   },
 };
 export default nextConfig;
