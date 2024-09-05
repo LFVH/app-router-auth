@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 type Image = {
   id: number;
@@ -26,10 +27,14 @@ export default function ImageList() {
       <h2>Imagens Carregadas</h2>
       <ul>
         {images.map((image) => (
-          <li key={image.id}>
-            <img src={image.filepath} alt={image.filename} width={200} />
-            <p>{image.filename}</p>
-          </li>
+          <Image
+          priority
+          key={image.filename}
+          src={image.filepath}
+          alt={image.filename}
+          width={200}
+          height={200}
+        />
         ))}
       </ul>
     </div>

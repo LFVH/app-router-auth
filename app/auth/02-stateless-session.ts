@@ -44,7 +44,7 @@ export async function createSession(userId: string) {
     path: '/',
   });
 
-  redirect('/insertImages');
+  redirect('/admin/insertimages');
 }
 
 export async function verifySession() {

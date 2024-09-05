@@ -1,11 +1,15 @@
 import Link from 'next/link';
 import { MenuIcon } from '@/components/ui/icons';
+import LogoutButton from './logout-button';
+import { getUser } from '@/app/auth/03-dal';
 
 const links = [
   { href: 'https://signupandloginlfvh.vercel.app', title: 'Home' },
-  { href: '/insertImages', title: 'Insert Images' },
+  { href: '/admin/insertimages', title: 'Insert Images' },
+  { href: '/admin/dashboard', title: 'Dashboard' },
   { href: '/listImages', title: 'List Images' },
   { href: '/contact', title: 'Contact' },
+  
 ];
 
 export default function Layout({
@@ -13,6 +17,7 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+	const user = await getUser();
   return (
     <div>
       <div className="border-b border-gray-100">
@@ -25,10 +30,9 @@ export default function Layout({
             ))}
           </nav>
           <div className="hidden items-center space-x-4 md:flex">
-            <Link
-              className="rounded-md border px-4 py-1.5 text-sm font-medium transition-colors hover:border-black hover:bg-black hover:text-white"
-              href="/login"
-            >
+		  <div className="border-t p-4">
+            <LogoutButton />
+          </div>
               Login
             </Link>
           </div>
