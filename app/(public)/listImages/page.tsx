@@ -1,7 +1,7 @@
 import { list } from '@vercel/blob';
 import Image from 'next/image';
  
-export async function ImageListPage() {
+export default async function Images() {
   async function allImages() {
     const blobs = await list();
     return blobs;
