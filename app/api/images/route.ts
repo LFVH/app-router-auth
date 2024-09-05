@@ -7,6 +7,6 @@ export async function GET(request: Request): Promise<NextResponse> {
     const result = await db.select().from(images).execute();
     return NextResponse.status(200).json(result);
   } catch (error) {
-    NextResponse.status(500).json({ message: 'Failed to fetch images', error });
+    return NextResponse.status(500).json({ message: 'Failed to fetch images', error });
   }
 }
