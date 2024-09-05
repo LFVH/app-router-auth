@@ -1,40 +1,25 @@
-'use client';
-import { useEffect, useState } from 'react';
+import { list } from '@vercel/blob';
 import Image from 'next/image';
-
-type Imge = {
-  id: number;
-  filename: string;
-  filepath: string;
-  createdAt: string;
-};
-
-export default function ImageListPage() {
-  const [images, setImages] = useState<Imge[]>([]);
-
-  useEffect(() => {
-    const fetchImages = async () => {
-      const response = await fetch('/api/images');
-      const data = await response.json();
-      setImages(data);
-    };
-
-    fetchImages();
-  }, []);
-
+ 
+export async function ImageListPage() {
+  async function allImages() {
+    const blobs = await list();
+    return blobs;
+  }
+  const images = await allImages();
+ 
   return (
-    <div>
-      <h2>Imagens Carregadas</h2>
-<section>
-        <ul>
-        {images.map((image) => (
-          <li key={image.id}>
-            <img src={image.filepath} alt={image.filename} width={200} />
-            <p>{image.filename}</p>
-          </li>
-        ))}
-      </ul>
-        </section>
-    </div>
+    <section>
+      {images.blobs.map((image) => (
+        <Image
+          priority
+          key={image.pathname}
+          src={image.url}
+          alt="Image"
+          width={200}
+          height={200}
+        />
+      ))}
+    </section>
   );
 }
