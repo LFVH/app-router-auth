@@ -9,17 +9,15 @@ export default async function Images() {
   const images = await allImages();
  
   return (
-    <section>
-      {images.blobs.map((image) => (
-        <Image
-          priority
-          key={image.pathname}
-          src={image.url}
-          alt="Image"
-          width={200}
-          height={200}
-        />
-      ))}
-    </section>
+ <section>
+        <ul>
+        {images.map((image) => (
+          <li key={image.pathname}>
+            <img src={image.url} alt={image.pathname} width={200} />
+          </li>
+        ))}
+      </ul>
+        </section>
+
   );
 }
