@@ -1,14 +1,13 @@
 import { list } from '@vercel/blob';
-import Image from 'next/image';
 
 export default async function Images() {
   // Função para buscar as imagens usando a API do Vercel Blob
-  const blobs = await list();
-  
+  const images = await list();
+  console.log("teste");
   return (
     <section>
       <ul>
-        {blobs.blobs.map((image) => (
+        {images.blobs.map((image) => (
           <li key={image.pathname}>
             <img
               src={image.url}
