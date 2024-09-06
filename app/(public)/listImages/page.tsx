@@ -15,7 +15,8 @@ export default async function Images() {
               alt={image.pathname}
               width={200}
               height={200}
-              priority  // Garante que a imagem seja carregada com prioridade
+              priority 
+              unoptimized  
             />
           </li>
         ))}
