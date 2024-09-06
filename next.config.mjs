@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  headers: async () => [
+  async headers() {
+    return [
       {
         // This works, and returns appropriate Response headers:
         source: '/(.*).jpg',
@@ -10,7 +11,8 @@ const nextConfig = {
             value:
               value: 'no-store, max-age=0',,
           },
-        
+        ]
+      },
       {
         // This doesn't work for 'Cache-Control' key (works for others though):
         source: '/_next/image(.*)',
@@ -34,7 +36,7 @@ const nextConfig = {
         ],
       },
       {
-        source: '/images',
+        source: '/images/:path*',
         headers: [
           {
             key: 'Cache-Control',
@@ -42,7 +44,8 @@ const nextConfig = {
           },
         ],
       },
-    ],
+    ]
+  },
   images: {
     remotePatterns: [
       {
