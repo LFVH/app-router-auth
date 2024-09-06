@@ -2,8 +2,9 @@ import { list } from '@vercel/blob';
 
 export default async function Images() {
   // Função para buscar as imagens usando a API do Vercel Blob
+  console.log("dsadasdsadsasdaads");
   const images = await list();
-  console.log("teste");
+  console.log('teste',images);
   return (
     <section>
       <ul>
