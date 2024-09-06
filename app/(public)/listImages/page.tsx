@@ -1,28 +1,21 @@
 import { list } from '@vercel/blob';
 import Image from 'next/image';
 
-export async function getServerSideProps() {
+export default async function Images() {
+  // Função para buscar as imagens usando a API do Vercel Blob
   const blobs = await list();
-  return {
-    props: {
-      images: blobs.blobs,
-    },
-  };
-}
-
-export default function Images({ images }) {
+  
   return (
     <section>
       <ul>
-        {images.map((image) => (
+        {blobs.blobs.map((image) => (
           <li key={image.pathname}>
             <Image
               src={image.url}
               alt={image.pathname}
               width={200}
               height={200}
-              // Adiciona a prioridade para carregar de forma otimizada
-              priority
+              priority  // Garante que a imagem seja carregada com prioridade
             />
           </li>
         ))}
