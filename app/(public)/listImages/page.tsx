@@ -10,13 +10,11 @@ export default async function Images() {
       <ul>
         {blobs.blobs.map((image) => (
           <li key={image.pathname}>
-            <Image
+            <img
               src={image.url}
               alt={image.pathname}
               width={200}
               height={200}
-              priority 
-              unoptimized  
             />
           </li>
         ))}
