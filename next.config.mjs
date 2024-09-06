@@ -36,7 +36,7 @@ const nextConfig = {
         ],
       },
       {
-        source: '/images/:path*',
+        source: '/listImages',
         headers: [
           {
             key: 'Cache-Control',
