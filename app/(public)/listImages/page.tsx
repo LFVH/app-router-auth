@@ -1,9 +1,15 @@
-import Image from 'next/image';
-
-export default function Images({ images }) {
+import { list } from '@vercel/blob';
+ 
+export default async function Images() {
+  async function allImages() {
+    const blobs = await list();
+    return blobs;
+  }
+  const images = await allImages();
+ 
   return (
-    <section>
-      {images.map((image) => (
+  <section>
+      {images.blobs.map((image) => (
         <li key={image.pathname}>
           <Image
             src={image.url}
@@ -16,3 +22,5 @@ export default function Images({ images }) {
     </section>
   );
 }
+
+import Image from 'next/image';
