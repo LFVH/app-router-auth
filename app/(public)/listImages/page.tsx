@@ -1,26 +1,32 @@
 import { list } from '@vercel/blob';
- 
-export default async function Images() {
-  async function allImages() {
-    const blobs = await list();
-    return blobs;
-  }
-  const images = await allImages();
- 
+import Image from 'next/image';
+
+export async function getServerSideProps() {
+  const blobs = await list();
+  return {
+    props: {
+      images: blobs.blobs,
+    },
+  };
+}
+
+export default function Images({ images }) {
   return (
-  <section>
-      {images.blobs.map((image) => (
-        <li key={image.pathname}>
-          <Image
-            src={image.url}
-            alt={image.pathname}
-            width={200}
-            height={200}
-          />
-        </li>
-      ))}
+    <section>
+      <ul>
+        {images.map((image) => (
+          <li key={image.pathname}>
+            <Image
+              src={image.url}
+              alt={image.pathname}
+              width={200}
+              height={200}
+              // Adiciona a prioridade para carregar de forma otimizada
+              priority
+            />
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
-
-import Image from 'next/image';
